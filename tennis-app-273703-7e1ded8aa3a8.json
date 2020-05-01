@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "tennis-app-273703",
+  "private_key_id": "7e1ded8aa3a8e77dc2a90a6fe8e85264bad34669",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDVvK3LEoauyQf1\nDc5AarHPIZkxVLt4mzy2JqZcgdEAcV+BZXoyW5PupBnTdzpv4c/zHtG+iWE6k4gF\nyUqze6XHtuv3aVJwT912kPWzjB26vpOn68qO8jksC+x85H48L/fqA/+kPx3ACnsy\nGW7lA2//bIvESvvZsS1Rb+OjvCDyfg64fcHIsWXGtE6IYhdwMnbED70x/PswepRD\n37YGqFytCcOCAOccujW7ewI+tpVnCTkPmYMnbJJQ/rC3Pe90/8X6XE11LJzN9mZs\nDb+X50BpCL2smv7yt+rCV2pEPQ94Z9ul679lJ7K3rNJL+mK0qtGoaeEf29G7EILP\n6HLNvTStAgMBAAECggEABZ9dAwaNvHNVXkDquA8Wdlhv6zhLZjTPOAt0POK9WMGi\nvYip2kFGdvSiKUnto5vRGJgq9FQw1pWi8mQFLwuFpOdO9cczf/jZ3pCZpgt9jLgO\nslAll/UPQ/VcVzy7hWHNp75LL0rpwW+FJiA9JpEclR+J3bQLRALBKm9DEb+VLkvO\nTynbCyR4HW03RaTwOfIolNeQ/+17/pDd3Ie+nyeYoZZPWZhM/B17h1rIw/O9RnrS\nRWK6racoSUByXwoMpZk+ZBkOV76lB0A8/ZJ5yvVd4GLa1eKgC+sso8nYUENxqgwI\n5P8QkCdlX38wU3Sd1s9oo0yeKf4A02nXl2Giq0XHAQKBgQDxg2cZMovZ4JUajhUH\nJngeKu2DM1e2EeqTYGj4IFLIVptBk1CEAHtiGPk4Dp8ijT+56ODtoyYvWH+nlEP4\nNAh+gryJwpeXGbUtdjT5n7IgmLn/g5MFq9tSqFFRC62OCG9rkNIkSVmJ/dFS/B6h\n3P8gMjXQZze6EhzERObAmL9lcQKBgQDijsDMq5oTCsAQgknQ5i5jcCDD3svjs4U/\npEPJWTwSFUCiBU/IBeb47jD+DPj5WhHZZ1ChVtxfWJwyMltsUVD4RTgNOwxLgsR0\nFpggCia+vJkatZWlJk8lnrQdqNs/SRw7qQEFi3ou1IClhvUaBdCZ5Ra+Xb027gzW\ntscuzis0/QKBgGBnQ1AbjRd7PglLjbk88dWY7RXh+LEElc4ePchNnr25VF/oncsT\nJi0SKujlbUAtgbKD8sToyuU7Pjl2RWtd2cYmCXwz4K6/5EIxXRQHWuMIE7aanqU0\n5GcqKMthDfYUB+W3+Sni3YrndhbZ7KBPxsbjQ/fcO7JaaIEvv6xBTKUBAoGAM1+l\njoO3G2xLozK4JFud10Sc2W2TFF4n8AeCq4zFl2AkWNkVf0j/WCFDEMjGSFzJQWAx\nI3S74g8I1EUhAA3sa2/exvlFz3WmsKBS/Kjwoj3IBgt5FIr8VY6IT1Vz6gTdFxY6\nuhQnr6jWRzK0L6Nz6wHMx3wgJO2UEbg+sHllyM0CgYEAid/4SyqGsJXsBupySFsd\nZCdgjejHLgUbXFobSMoCAApaqNryMTHx6clq2BpZGy3XJkCeyf/qHXS3gHkOdtZh\nc/7ukGulQPjSx1xrEstazqC7oag+B4ZdIFZH1x5oxkDjxZkLDjORVwFu49w2QzrQ\nHp0dUWKphNamf41T7BybWIg=\n-----END PRIVATE KEY-----\n",
+  "client_email": "tennis-app@tennis-app-273703.iam.gserviceaccount.com",
+  "client_id": "103148664673065095051",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tennis-app%40tennis-app-273703.iam.gserviceaccount.com"
+}

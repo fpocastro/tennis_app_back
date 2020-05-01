@@ -5,7 +5,7 @@ const getPlaces = () => {
 }
 
 const getPlacesByDistance = (latLng, distance) => {
-    return Place.find().find({
+    return Place.find({
         geo: {
             $near: {
                 $geometry: {
