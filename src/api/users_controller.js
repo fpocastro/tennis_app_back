@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const verify = require('../helpers/verify_token');
 const usersService = require('../services/users_service');
+const placesService = require('../services/places_service');
 const {
     userValidator
 } = require('../validators/users_validator');
@@ -10,8 +11,17 @@ router.get('/', verify, async (req, res) => {
     try {
         const latLng = req.query.latLng ? req.query.latLng.split(',') : null;
         users = await usersService.getUsers(latLng, parseInt(req.query.maxDistance));
-        console.log(req.query.maxDistance);
         res.send(users);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+router.get('/places', verify, async (req, res) => {
+    try {
+        const user = await usersService.getUser(req.user._id);
+        const places = await placesService.getPlacesByIds(user.favoritePlaces);
+        res.send(places);
     } catch (err) {
         res.status(500).send(err);
     }
@@ -68,4 +78,4 @@ router.put('/upload_image/:_id', verify, async (req, res) => {
     }
 });
 
-module.exports = router
+module.exports = router;

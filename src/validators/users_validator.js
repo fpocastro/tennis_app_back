@@ -13,6 +13,7 @@ const userValidator = (data) => {
         level: Joi.number(),
         playersSearchDistance: Joi.number(),
         placesSearchDistance: Joi.number(),
+        favoritePlaces: Joi.array(),
         introduction: Joi.bool()
     });
     return schema.validate(data);

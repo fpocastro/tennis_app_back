@@ -1,19 +1,29 @@
 const Place = require('../models/Place');
 
-const getPlaces = () => {
-    return Place.find();
+const getPlaces = (latLng, maxDistance) => {
+    var places;
+    if (latLng && maxDistance) {
+        places = Place.find({
+            geo: {
+                $near: {
+                    $geometry: {
+                        type: 'Point',
+                        coordinates: latLng
+                    },
+                    $maxDistance: maxDistance
+                }
+            }
+        });
+    } else {
+        places = Place.find();
+    }
+    return places
 }
 
-const getPlacesByDistance = (latLng, distance) => {
+const getPlacesByIds = (ids) => {
     return Place.find({
-        geo: {
-            $near: {
-                $geometry: {
-                    type: 'Point',
-                    coordinates: latLng
-                },
-                $maxDistance: distance
-            }
+        _id: {
+            '$in': ids
         }
     });
 }
@@ -36,7 +46,7 @@ const updatePlace = (_id, place) => {
 }
 
 module.exports.getPlaces = getPlaces;
-module.exports.getPlacesByDistance = getPlacesByDistance;
+module.exports.getPlacesByIds = getPlacesByIds;
 module.exports.getPlace = getPlace;
 module.exports.addPlace = addPlace;
 module.exports.updatePlace = updatePlace;

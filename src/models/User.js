@@ -69,23 +69,16 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    favoritePlaces: [
+        {
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Place',
+            default: []
+        }
+    ],
     date: {
         type: Date,
         default: Date.now
-    }
-});
-
-const userAccountInfoSchema = new mongoose.Schema({
-    level: {
-        type: Number,
-    },
-    playersSearchDistance: {
-        type: Number,
-        default: 5
-    },
-    placesSearchDistance: {
-        type: Number,
-        default: 5
     }
 });
 

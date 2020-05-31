@@ -5,17 +5,8 @@ const placesService = require('../services/places_service');
 
 router.get('/', verify, async (req, res) => {
     try {
-        const places = await placesService.getPlaces();
-        res.send(places);
-    } catch (err) {
-        res.status(500).send(err);
-    }
-});
-
-router.get('/distance/:latLng', verify, async (req, res) => {
-    try {
-        const latLng = req.params.latLng.split(',')
-        const places = await placesService.getPlacesByDistance(latLng, 5000);
+        const latLng = req.query.latLng ? req.query.latLng.split(',') : null;
+        const places = await placesService.getPlaces(latLng, parseInt(req.query.maxDistance));
         res.send(places);
     } catch (err) {
         res.status(500).send(err);
