@@ -10,7 +10,6 @@ router.get('/', verify, async (req, res) => {
     try {
         filters = {};
         filters.private = false;
-        console.log(req.query.matchDate);
         if (req.query.matchDate) filters.matchDate = {
             $gte: Date.parse(req.query.matchDate)
         }
@@ -27,6 +26,17 @@ router.get('/', verify, async (req, res) => {
         matches = await matchesService.getMatchesByDistance(filters, latLng, req.query.maxDistance);
 
         res.send(matches);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+});
+
+router.get('/player/:_id', verify, async (req, res) => {
+    try {
+        var performance = await matchesService.getPlayerPerformance(req.params._id);
+
+        res.send(performance);
     } catch (err) {
         console.log(err);
         res.status(500).send(err);

@@ -1,7 +1,7 @@
 const Match = require('../models/Match');
 
 function deg2rad(deg) {
-    return deg * (Math.PI/180);
+    return deg * (Math.PI / 180);
 }
 
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -18,18 +18,20 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 }
 
 const getMatchesByDistance = async (filters, latLng, maxDistance) => {
-    var matches = await Match.find(filters).populate('creator teamOne teamTwo').populate('matchPlace possiblePlaces').sort({matchDate: 1});
+    var matches = await Match.find(filters).populate('creator teamOne teamTwo').populate('matchPlace possiblePlaces').sort({
+        matchDate: 1
+    });
     if (latLng && maxDistance) {
         var closeMatches = [];
         matches.filter((match) => {
             for (var i = 0; i < match.possiblePlaces.length; i++) {
                 var placeDistance = getDistanceFromLatLonInKm(
-                    match.possiblePlaces[i].geo.coordinates[0], 
-                    match.possiblePlaces[i].geo.coordinates[1], 
-                    latLng[0], 
+                    match.possiblePlaces[i].geo.coordinates[0],
+                    match.possiblePlaces[i].geo.coordinates[1],
+                    latLng[0],
                     latLng[1]
                 );
-                if(placeDistance < maxDistance/1000) {
+                if (placeDistance < maxDistance / 1000) {
                     closeMatches.push(match);
                     break;
                 }
@@ -41,13 +43,53 @@ const getMatchesByDistance = async (filters, latLng, maxDistance) => {
     }
 }
 
+const getPlayerPerformance = async (playerId) => {
+    const matches = await Match.find({
+        $or: [{
+            teamOne: {
+                $in: [playerId]
+            }
+        }, {
+            teamTwo: {
+                $in: [playerId]
+            }
+        }],
+        status: 'closed'
+    });
+    var wins = 0;
+    var losses = 0;
+    for (var i = 0; i < matches.length; i++) {
+        var teamOneSets = 0;
+        var teamTwoSets = 0;
+        for (var j = 0; j < matches[i].score.sets.length; j++) {
+            if (matches[i].score.sets[j].teamOne > matches[i].score.sets[j].teamTwo) {
+                teamOneSets++;
+            } else {
+                teamTwoSets++;
+            }
+        }
+        if (matches[i].teamOne.includes(playerId)) {
+            teamOneSets > teamTwoSets ? wins++ : losses++;
+        }
+        else {
+            teamOneSets > teamTwoSets ? losses++ : wins++;
+        }
+    }
+
+    return {wins: wins, losses: losses}
+}
+
 const createMatch = async (match) => {
     const matchObj = new Match(match);
     return await matchObj.save().then(m => m.populate('creator teamOne teamTwo').populate('matchPlace possiblePlaces').execPopulate());
 }
 
 const addPlayerToMatch = async (matchId, playerId, team) => {
-    var match = await Match.findOne({_id: matchId, status: 'open', private: false});
+    var match = await Match.findOne({
+        _id: matchId,
+        status: 'open',
+        private: false
+    });
 
     if (!match) {
         return false;
@@ -65,9 +107,13 @@ const addPlayerToMatch = async (matchId, playerId, team) => {
     addParams = {}
 
     if (team === 1) {
-        addParams.$push = {teamOne: playerId}
+        addParams.$push = {
+            teamOne: playerId
+        }
     } else {
-        addParams.$push = {teamTwo: playerId}
+        addParams.$push = {
+            teamTwo: playerId
+        }
     }
 
     if (match.numberOfPlayers === 2) {
@@ -76,26 +122,55 @@ const addPlayerToMatch = async (matchId, playerId, team) => {
         addParams.status = 'pending';
     }
 
-    await Match.findOneAndUpdate({_id: matchId, status: 'open', private: false}, addParams);
+    await Match.findOneAndUpdate({
+        _id: matchId,
+        status: 'open',
+        private: false
+    }, addParams);
 
     return true;
 }
 
 const removePlayerFromMatch = async (matchId, playerId) => {
-    await Match.findOneAndUpdate({_id: matchId, status: {$or: ['open, pending']}}, {$pullAll: {teamOne: [playerId], teamTwo: [playerId]}, status: 'open'});
+    await Match.findOneAndUpdate({
+        _id: matchId,
+        status: {
+            $in: ['open', 'pending']
+        }
+    }, {
+        $pullAll: {
+            teamOne: [playerId],
+            teamTwo: [playerId]
+        },
+        status: 'open'
+    });
     return true;
 }
 
 const deleteMatch = async (matchId, creatorId) => {
-    return await Match.findOneAndDelete({_id: matchId, creator: creatorId, status: {$or: ['open, pending']}});
+    return await Match.findOneAndDelete({
+        _id: matchId,
+        creator: creatorId,
+        status: {
+            $or: ['open', 'pending']
+        }
+    });
 }
 
 const updateScore = async (matchId, score, creatorId) => {
-    var match =  await Match.findOneAndUpdate({_id: matchId, creator: creatorId, status: 'pending'}, {score: score, status: 'closed'});
+    var match = await Match.findOneAndUpdate({
+        _id: matchId,
+        creator: creatorId,
+        status: 'pending'
+    }, {
+        score: score,
+        status: 'closed'
+    });
     return match ? true : false;
 }
 
 module.exports.getMatchesByDistance = getMatchesByDistance;
+module.exports.getPlayerPerformance = getPlayerPerformance;
 module.exports.addPlayerToMatch = addPlayerToMatch;
 module.exports.removePlayerFromMatch = removePlayerFromMatch;
 module.exports.createMatch = createMatch;
