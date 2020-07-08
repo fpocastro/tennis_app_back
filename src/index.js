@@ -11,6 +11,7 @@ const placesRoute = require('./api/places_controller');
 const chatsRoute = require('./api/chats_controller');
 const faqsRoute = require('./api/faqs_controller');
 const matchesRouter = require('./api/matches_controller');
+const eventsRouter = require('./api/events_controller');
 
 const cors = require('cors');
 const http = require('http').createServer(app)
@@ -36,6 +37,7 @@ app.use('/api/places', placesRoute);
 app.use('/api/chats', chatsRoute);
 app.use('/api/faqs', faqsRoute);
 app.use('/api/matches', matchesRouter);
+app.use('/api/events', eventsRouter);
 
 var users = {};
 const chatsService = require('./services/chats_service');

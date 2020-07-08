@@ -1,8 +1,8 @@
 const User = require('../models/User');
 
-const getUsers = (latLng, maxDistance) => {
+const getUsers = (latLng, maxDistance, name) => {
     var users;
-    if (latLng && maxDistance) {
+    if (latLng && maxDistance && name) {
         users = User.find({
             lastLocation: {
                 $near: {
@@ -12,7 +12,20 @@ const getUsers = (latLng, maxDistance) => {
                     },
                     $maxDistance: maxDistance
                 }
-            }
+            },
+            name: {$regex: name, $options: 'i'}
+        });
+    } else if (latLng && maxDistance) {
+        users = User.find({
+            lastLocation: {
+                $near: {
+                    $geometry: {
+                        type: 'Point',
+                        coordinates: latLng
+                    },
+                    $maxDistance: maxDistance
+                }
+            },
         });
     } else {
         users = User.find();

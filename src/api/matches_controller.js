@@ -9,7 +9,7 @@ const {
 router.get('/', verify, async (req, res) => {
     try {
         filters = {};
-        filters.private = false;
+        // filters.private = false;
         if (req.query.matchDate) filters.matchDate = {
             $gte: Date.parse(req.query.matchDate)
         }

@@ -10,7 +10,8 @@ const cloud_storage = require('../helpers/cloud_storage');
 router.get('/', verify, async (req, res) => {
     try {
         const latLng = req.query.latLng ? req.query.latLng.split(',') : null;
-        users = await usersService.getUsers(latLng, parseInt(req.query.maxDistance));
+        const name = req.query.name;
+        users = await usersService.getUsers(latLng, parseInt(req.query.maxDistance), name);
         res.send(users);
     } catch (err) {
         res.status(500).send(err);

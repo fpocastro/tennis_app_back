@@ -70,13 +70,15 @@ const getPlayerPerformance = async (playerId) => {
         }
         if (matches[i].teamOne.includes(playerId)) {
             teamOneSets > teamTwoSets ? wins++ : losses++;
-        }
-        else {
+        } else {
             teamOneSets > teamTwoSets ? losses++ : wins++;
         }
     }
 
-    return {wins: wins, losses: losses}
+    return {
+        wins: wins,
+        losses: losses
+    }
 }
 
 const createMatch = async (match) => {
@@ -151,9 +153,16 @@ const deleteMatch = async (matchId, creatorId) => {
     return await Match.findOneAndDelete({
         _id: matchId,
         creator: creatorId,
-        status: {
-            $or: ['open', 'pending']
-        }
+        $or: [{
+                status: {
+                    $in: ['open', 'pending']
+                }
+            },
+            {
+                private: true
+            }
+        ]
+
     });
 }
 
@@ -161,7 +170,13 @@ const updateScore = async (matchId, score, creatorId) => {
     var match = await Match.findOneAndUpdate({
         _id: matchId,
         creator: creatorId,
-        status: 'pending'
+        $or: [{
+                status: 'pending'
+            },
+            {
+                private: true
+            }
+        ]
     }, {
         score: score,
         status: 'closed'
