@@ -1,3 +1,3 @@
 # tennis_app_back
 
-Projeto que compõe o back end da aplicação proposta no meu TCC.
+Project that makes up the back end of the application proposed in my thesis.
